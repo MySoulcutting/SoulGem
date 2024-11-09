@@ -19,12 +19,7 @@ object XiangQianUI {
             handLocked(false)
             title = XiangQianConf.config.getString("Gui.Title")!!
             map(
-                XiangQianConf.config.getStringList("Gui.Slots")[0],
-                XiangQianConf.config.getStringList("Gui.Slots")[1],
-                XiangQianConf.config.getStringList("Gui.Slots")[2],
-                XiangQianConf.config.getStringList("Gui.Slots")[3],
-                XiangQianConf.config.getStringList("Gui.Slots")[4],
-                XiangQianConf.config.getStringList("Gui.Slots")[5]
+                *XiangQianConf.config.getStringList("Gui.Slots").toTypedArray()
             )
             val sec = XiangQianConf.config.getConfigurationSection("Gui.Items")?.getKeys(false)
             if (sec != null) {

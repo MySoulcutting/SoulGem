@@ -3,16 +3,11 @@ package com.whitesoul.soulgem.listener
 import com.whitesoul.soulgem.file.ConfigFile
 import com.whitesoul.soulgem.file.GemsFile
 import eos.moe.dragoncore.api.SlotAPI
-import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.serverct.ersha.api.AttributeAPI
 import org.serverct.ersha.api.event.AttrUpdateAttributeEvent
-import org.serverct.ersha.attribute.data.AttributeData
 import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.platform.function.info
 import taboolib.module.chat.colored
-import taboolib.module.chat.uncolored
-import taboolib.platform.util.hasLore
 
 object AttributeUpdateListener {
     val attributeList = ArrayList<String>()
@@ -35,7 +30,7 @@ object AttributeUpdateListener {
         // 更新宝石属性
         attributeList.clear()
         updateGemItemList(itemList)
-        AttributeAPI.addSourceAttribute(attributeData,"宝石属性", attributeList)
+        AttributeAPI.addSourceAttribute(attributeData,"SoulGem", attributeList)
     }
     // 更新宝石属性
     fun updateGemItemList(itemList: ArrayList<ItemStack?>) {
