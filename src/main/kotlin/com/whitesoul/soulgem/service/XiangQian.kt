@@ -6,11 +6,10 @@ import com.whitesoul.soulgem.util.ItemUtil.replaceFirstLore
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.common.util.random
-import taboolib.common.util.randomDouble
 import taboolib.module.chat.colored
 import taboolib.module.nms.getItemTag
 import taboolib.platform.util.hasLore
-import taboolib.platform.util.hasName
+import taboolib.platform.util.sendInfo
 
 object XiangQian {
     /**
@@ -28,13 +27,13 @@ object XiangQian {
             if (randomChance < gem.chance) {
                 item.replaceFirstLore(gemLore, gem.inlayLore.colored())
                 gemItem?.amount = gemItem?.amount?.minus(1)!! // 减少宝石数量
-                player.sendMessage("成功将 &6${gemItem.itemMeta?.displayName}&f 镶嵌到 &6${item.itemMeta?.displayName}&f 上".colored())
+                player.sendInfo("XiangQian-Success", gemItem.itemMeta?.displayName?: "未知", item.itemMeta?.displayName?: "未知")
             } else {
                 gemItem?.amount = gemItem?.amount?.minus(1)!! // 减少宝石数量
-                player.sendMessage("镶嵌失败，宝石已经破碎".colored())
+                player.sendInfo("XiangQian-Fail")
             }
         } else {
-            player.sendMessage("该物品无法镶嵌此宝石".colored())
+            player.sendInfo("XiangQian-Fail_2")
         }
     }
     // 幸运值计算

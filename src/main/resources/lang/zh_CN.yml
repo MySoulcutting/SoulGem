@@ -1,0 +1,7 @@
+prefix: "&f[&a宝石系统&f]"
+XiangQian-Success: "&e成功将 {0} &e镶嵌到 {1} !"
+XiangQian-Fail: "&c镶嵌失败, 宝石已经破碎!"
+XiangQian-Fail_2: "&c该物品无法镶嵌此宝石!"
+
+ChaiXie-Success: "&e成功将 {0} &e拆卸下来!"
+

@@ -1,5 +1,6 @@
 package com.whitesoul.soulgem.ui
 
+import com.whitesoul.soulgem.file.ChaiXieConf
 import com.whitesoul.soulgem.file.GemTypeConf
 import com.whitesoul.soulgem.file.GemsFile
 import com.whitesoul.soulgem.service.ChaiXie
@@ -16,30 +17,47 @@ import taboolib.module.ui.ClickEvent
 import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
 import taboolib.platform.util.buildItem
-import taboolib.platform.util.hasLore
-import taboolib.platform.util.modifyLore
+import taboolib.platform.util.sendInfo
 
 object ChaiXieUI {
     // 打开UI
     fun Player.openChaiXieUI() {
-        val gemList = ArrayList<ItemStack>()
         openMenu<Chest> {
             handLocked(false)
-            title = "拆卸界面".colored()
+            title = ChaiXieConf.config.getString("Gui.Title")!!.colored()
             map(
-                "####X####",
-                "#########",
-                "#@@@@@@@#",
-                "#@@@@@@@#",
-                "#########"
+                *ChaiXieConf.config.getStringList("Gui.Slots").toTypedArray()
             )
-            set('#') {
-                buildItem(XMaterial.BLACK_STAINED_GLASS_PANE)
+            val sec = ChaiXieConf.config.getConfigurationSection("Gui.Items")?.getKeys(false)
+            if (sec != null) {
+                for (key in sec) {
+                    when (key[0]) {
+                        'X' -> {}
+                        '@' -> {}
+                        else -> {
+                            // 设置格子物品
+                            set(
+                                key[0],
+                                buildItem(
+                                    XMaterial.matchXMaterial(ChaiXieConf.config.getString("Gui.Items.$key.Type")!!)
+                                        .get()
+                                ) {
+                                    name = ChaiXieConf.config.getString("Gui.Items.$key.Name")
+                                    lore.addAll(ChaiXieConf.config.getStringList("Gui.Items.$key.Lore"))
+                                    hideAll()
+                                    colored()
+                                }) {
+                                clickEvent().isCancelled =
+                                    ChaiXieConf.config.getBoolean("Gui.Items.$key.DisableClick")
+                            }
+                        }
+                    }
+                }
             }
             onClick('X') { event: ClickEvent ->
                 event.isCancelled = false
-                submit(delay = 2) {
-                    val item = event.getItem('X')
+                submit(delay = 1) {
+                    val item: ItemStack? = event.getItem('X')
                     player.sendMessage("你放入了 ${item?.getI18nName()}")
                     if (item != null) {
                         val gemSlots = ArrayList<Int>()
@@ -51,7 +69,7 @@ object ChaiXieUI {
                         }
                         // 再放入
                         gemSlots.forEach {
-                            event.inventory.setItem(it, gemItems.removeFirst())
+                            event.inventory.setItem(it, gemItems.removeFirstOrNull())
                         }
                     } else {
                         getSlots('@').forEach {
@@ -67,7 +85,7 @@ object ChaiXieUI {
                 val slot = event.rawSlot
                 val item = event.getItem('X')
                 val gemItem = event.inventory.getItem(slot)
-                player.sendMessage("你拆去了 ${event.inventory.getItem(slot).itemMeta?.displayName}")
+                player.sendInfo("ChaiXie-Success",event.inventory.getItem(slot).itemMeta?.displayName?: "未知")
                 // 获取宝石信息
                 val gemID = gemItem?.getItemTag()?.getDeep("soulgem.id")?.asString()
                 val gemType = gemItem?.getItemTag()?.getDeep("soulgem.type")?.asString()
@@ -80,7 +98,8 @@ object ChaiXieUI {
                 event.inventory.setItem(slot, null)
             }
             onClose { event: InventoryCloseEvent ->
-                player.inventory.addItem(event.inventory.getItem(getFirstSlot('X')))
+                val item: ItemStack? = event.inventory.getItem(getFirstSlot('X'))
+                player.inventory.addItem(item)
             }
         }
     }

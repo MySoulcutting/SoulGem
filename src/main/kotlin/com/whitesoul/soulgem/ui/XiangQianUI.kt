@@ -4,20 +4,19 @@ import com.whitesoul.soulgem.file.XiangQianConf
 import com.whitesoul.soulgem.service.XiangQian
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import taboolib.common.platform.function.info
 import taboolib.library.xseries.XMaterial
+import taboolib.module.chat.colored
 import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
 import taboolib.platform.util.buildItem
 import taboolib.platform.util.giveItem
-import taboolib.platform.util.hasLore
 
 object XiangQianUI {
     // 打开UI
     fun Player.openXiangQianUI() {
         openMenu<Chest> {
             handLocked(false)
-            title = XiangQianConf.config.getString("Gui.Title")!!
+            title = XiangQianConf.config.getString("Gui.Title")!!.colored()
             map(
                 *XiangQianConf.config.getStringList("Gui.Slots").toTypedArray()
             )
@@ -33,8 +32,7 @@ object XiangQianUI {
                             set(
                                 key[0],
                                 buildItem(
-                                    XMaterial.matchXMaterial(XiangQianConf.config.getString("Gui.Items.D.Type")!!)
-                                        .get()
+                                    XMaterial.matchXMaterial(XiangQianConf.config.getString("Gui.Items.D.Type")!!).get()
                                 ) {
                                     name = XiangQianConf.config.getString("Gui.Items.D.Name")
                                     lore.addAll(XiangQianConf.config.getStringList("Gui.Items.D.Lore"))
