@@ -1,4 +1,4 @@
-package com.whitesoul.soulgem.file
+package com.whitesoul.soulgem.file.gem
 
 import com.whitesoul.soulgem.data.GemTypeData
 import taboolib.common.LifeCycle

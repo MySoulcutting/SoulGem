@@ -1,7 +1,7 @@
 package com.whitesoul.soulgem.listener
 
 import com.whitesoul.soulgem.file.ConfigFile
-import com.whitesoul.soulgem.file.GemsFile
+import com.whitesoul.soulgem.file.gem.GemsFile
 import eos.moe.dragoncore.api.SlotAPI
 import org.bukkit.inventory.ItemStack
 import org.serverct.ersha.api.AttributeAPI
@@ -23,6 +23,7 @@ object AttributeUpdateListener {
         val armorChest: ItemStack? = player?.inventory?.chestplate
         val armorLegs: ItemStack? = player?.inventory?.leggings
         val armorFeet: ItemStack? = player?.inventory?.boots
+        // 龙核槽位属性
         ConfigFile.config.getStringList("DragonCoreSlot").forEach { slot ->
             itemList.add(SlotAPI.getCacheSlotItem(player, slot))
         }

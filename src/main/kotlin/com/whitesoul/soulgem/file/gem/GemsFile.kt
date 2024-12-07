@@ -1,14 +1,11 @@
-package com.whitesoul.soulgem.file
+package com.whitesoul.soulgem.file.gem
 
 import com.whitesoul.soulgem.data.GemsData
 import org.bukkit.Material
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.inventory.ItemStack
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
-import taboolib.common.platform.function.info
 import taboolib.module.chat.colored
-import taboolib.module.chat.uncolored
 import taboolib.module.nms.itemTagReader
 import taboolib.platform.BukkitPlugin
 import taboolib.platform.util.buildItem

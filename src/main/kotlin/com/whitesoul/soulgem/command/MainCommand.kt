@@ -1,5 +1,9 @@
 package com.whitesoul.soulgem.command
 
+import com.whitesoul.soulgem.command.sub.GiveGemCommand
+import com.whitesoul.soulgem.command.sub.GiveLuckyGemCommand
+import com.whitesoul.soulgem.command.sub.OpenCommand
+import com.whitesoul.soulgem.command.sub.ReloadCommand
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
@@ -14,6 +18,8 @@ object MainCommand {
 
     @CommandBody(permission = "soulgem.give")
     val giveGem = GiveGemCommand.command
+    @CommandBody(permission = "soulgem.give")
+    val giveLuckyGem = GiveLuckyGemCommand.command
 
     @CommandBody(permission = "soulgem.open")
     val open = OpenCommand.command

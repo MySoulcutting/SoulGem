@@ -1,9 +1,9 @@
-package com.whitesoul.soulgem.file
+package com.whitesoul.soulgem.file.ui
 
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.ConfigFile
 
-object XiangQianConf {
-    @Config("ui/XiangQian.yml")
+object ChaiXieConf {
+    @Config("ui/ChaiXie.yml")
     lateinit var config: ConfigFile
 }

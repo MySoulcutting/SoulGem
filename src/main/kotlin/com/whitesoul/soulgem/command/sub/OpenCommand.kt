@@ -1,4 +1,4 @@
-package com.whitesoul.soulgem.command
+package com.whitesoul.soulgem.command.sub
 
 import com.whitesoul.soulgem.ui.ChaiXieUI.openChaiXieUI
 import com.whitesoul.soulgem.ui.XiangQianUI.openXiangQianUI

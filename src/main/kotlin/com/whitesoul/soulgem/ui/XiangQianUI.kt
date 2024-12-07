@@ -1,6 +1,6 @@
 package com.whitesoul.soulgem.ui
 
-import com.whitesoul.soulgem.file.XiangQianConf
+import com.whitesoul.soulgem.file.ui.XiangQianConf
 import com.whitesoul.soulgem.service.XiangQian
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -42,7 +42,8 @@ object XiangQianUI {
                                 clickEvent().isCancelled = true
                                 val item = getItem('A')
                                 val gem = getItem('B')
-                                XiangQian.xiangQianButton(player, item, gem)
+                                val luckGem = getItem('C')
+                                XiangQian.xiangQianButton(player, item, gem, luckGem)
                             }
                         }
                         else -> {

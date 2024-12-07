@@ -1,8 +1,8 @@
 package com.whitesoul.soulgem.ui
 
-import com.whitesoul.soulgem.file.ChaiXieConf
-import com.whitesoul.soulgem.file.GemTypeConf
-import com.whitesoul.soulgem.file.GemsFile
+import com.whitesoul.soulgem.file.ui.ChaiXieConf
+import com.whitesoul.soulgem.file.gem.GemTypeConf
+import com.whitesoul.soulgem.file.gem.GemsFile
 import com.whitesoul.soulgem.service.ChaiXie
 import com.whitesoul.soulgem.util.ItemUtil.replaceFirstLore
 import org.bukkit.entity.Player
@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.function.submit
 import taboolib.library.xseries.XMaterial
 import taboolib.module.chat.colored
-import taboolib.module.nms.getI18nName
 import taboolib.module.nms.getItemTag
 import taboolib.module.ui.ClickEvent
 import taboolib.module.ui.openMenu
@@ -58,7 +57,6 @@ object ChaiXieUI {
                 event.isCancelled = false
                 submit(delay = 1) {
                     val item: ItemStack? = event.getItem('X')
-                    player.sendMessage("你放入了 ${item?.getI18nName()}")
                     if (item != null) {
                         val gemSlots = ArrayList<Int>()
                         val gemItems: ArrayList<ItemStack?> = ChaiXie.getGemsList(item)
