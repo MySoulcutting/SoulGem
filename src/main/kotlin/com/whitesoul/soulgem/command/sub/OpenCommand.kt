@@ -14,14 +14,12 @@ object OpenCommand {
                 execute<CommandSender>  {sender, context, argument ->
                     val player = Bukkit.getPlayer(context["玩家名"])
                     player.openXiangQianUI()
-                    sender.sendMessage("已为玩家 ${player.name} 打开 镶嵌界面")
                 }
             }
             literal("拆卸界面") {
                 execute<CommandSender>  {sender, context, argument ->
                     val player = Bukkit.getPlayer(context["玩家名"])
                     player.openChaiXieUI()
-                    sender.sendMessage("已为玩家 ${player.name} 打开 拆卸界面")
                 }
             }
         }

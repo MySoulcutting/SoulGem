@@ -3,6 +3,8 @@ package com.whitesoul.soulgem.service
 import com.whitesoul.soulgem.data.GemsData
 import com.whitesoul.soulgem.file.gem.GemsFile
 import org.bukkit.inventory.ItemStack
+import taboolib.module.chat.colored
+import taboolib.platform.util.modifyLore
 
 object ChaiXie {
     /**

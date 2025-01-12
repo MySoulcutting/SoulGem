@@ -25,7 +25,7 @@ object XiangQian {
         if (item?.hasLore(gemLore) == true && gem !=null) {
             // 减少宝石数量
             gemItem?.amount = gemItem?.amount?.minus(1)!!
-            luckyGemItem?.amount = gemItem.amount.minus(1)
+            luckyGemItem?.amount = luckyGemItem?.amount?.minus(1)!!
             val chance = chance(luckyGemItem)
             // 概率计算
             if (chance < gem.chance) {

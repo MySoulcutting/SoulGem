@@ -1,6 +1,7 @@
 package com.whitesoul.soulgem.util
 
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.ItemMeta
 import taboolib.module.chat.colored
 import taboolib.platform.util.hasLore
 

@@ -4,10 +4,12 @@ import com.whitesoul.soulgem.file.ui.ChaiXieConf
 import com.whitesoul.soulgem.file.gem.GemTypeConf
 import com.whitesoul.soulgem.file.gem.GemsFile
 import com.whitesoul.soulgem.service.ChaiXie
+import com.whitesoul.soulgem.util.ItemUtil
 import com.whitesoul.soulgem.util.ItemUtil.replaceFirstLore
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
+import taboolib.common.platform.function.info
 import taboolib.common.platform.function.submit
 import taboolib.library.xseries.XMaterial
 import taboolib.module.chat.colored
@@ -16,6 +18,7 @@ import taboolib.module.ui.ClickEvent
 import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
 import taboolib.platform.util.buildItem
+import taboolib.platform.util.modifyLore
 import taboolib.platform.util.sendInfo
 
 object ChaiXieUI {
@@ -79,6 +82,13 @@ object ChaiXieUI {
                         // 再放入
                         gemSlots.forEach {
                             event.inventory.setItem(it, gemItems.removeFirstOrNull())
+                        }
+                        event.getItems('@').forEach { invGem ->
+                            invGem.modifyLore {
+                                add("")
+                                add("")
+                                add("&c&l点击拆卸".colored())
+                            }
                         }
                     } else {
                         getSlots('@').forEach {
