@@ -22,7 +22,6 @@ object ChaiXieUI {
     // 打开UI
     fun Player.openChaiXieUI() {
         openMenu<Chest> {
-            handLocked(false)
             title = ChaiXieConf.config.getString("Gui.Title")!!.colored()
             map(
                 *ChaiXieConf.config.getStringList("Gui.Slots").toTypedArray()
@@ -53,11 +52,23 @@ object ChaiXieUI {
                     }
                 }
             }
-            onClick('X') { event: ClickEvent ->
-                event.isCancelled = false
-                submit(delay = 1) {
-                    val item: ItemStack? = event.getItem('X')
+            // 一键放入拆卸
+            onClick { event: ClickEvent ->
+                // 玩家背包
+                event.isCancelled = true
+                val playerItem = event.currentItem
+                // 检测是否有宝石
+                if (!ChaiXie.hasGems(playerItem)) return@onClick
+                val targetItem = event.inventory.getItem(getFirstSlot('X'))
+                // 如果目标槽位已经有物品，则阻止放入
+                if (targetItem != null) {
+                    return@onClick
+                }
+                event.inventory.setItem(getFirstSlot('X'), playerItem)
+                playerItem?.amount = 0
+                    val item = event.getItem('X')
                     if (item != null) {
+                        // 宝石格
                         val gemSlots = ArrayList<Int>()
                         val gemItems: ArrayList<ItemStack?> = ChaiXie.getGemsList(item)
                         // 先清除
@@ -74,6 +85,15 @@ object ChaiXieUI {
                             event.inventory.setItem(it, null)
                         }
                     }
+            }
+            // 拿出物品
+            onClick('X') { event:ClickEvent ->
+                event.isCancelled = true
+                val item = event.currentItem ?: return@onClick
+                player.inventory.addItem(item)
+                item.amount = 0
+                getSlots('@').forEach { slot ->
+                    event.inventory.setItem(slot, null)
                 }
             }
             // 拆卸宝石
@@ -96,7 +116,7 @@ object ChaiXieUI {
                 event.inventory.setItem(slot, null)
             }
             onClose { event: InventoryCloseEvent ->
-                val item: ItemStack? = event.inventory.getItem(getFirstSlot('X'))
+                val item: ItemStack = event.inventory?.getItem(getFirstSlot('X')) ?: return@onClose
                 player.inventory.addItem(item)
             }
         }

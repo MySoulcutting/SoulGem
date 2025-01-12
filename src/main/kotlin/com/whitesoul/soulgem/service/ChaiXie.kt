@@ -21,4 +21,11 @@ object ChaiXie {
         }
         return gemsList
     }
+    /**
+     * 获取物品上是否有宝石
+     */
+    fun hasGems(item: ItemStack?): Boolean {
+        val list = getGemsList(item)
+        return list.isNotEmpty()
+    }
 }
