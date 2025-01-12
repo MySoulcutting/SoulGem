@@ -6,6 +6,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.library.xseries.XMaterial
 import taboolib.module.chat.colored
+import taboolib.module.ui.ClickEvent
 import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
 import taboolib.platform.util.buildItem
@@ -46,6 +47,7 @@ object XiangQianUI {
                                 XiangQian.xiangQianButton(player, item, gem, luckGem)
                             }
                         }
+
                         else -> {
                             // 设置格子物品
                             set(
@@ -73,6 +75,65 @@ object XiangQianUI {
                     player.giveItem(itemA)
                     player.giveItem(itemB)
                     player.giveItem(itemC)
+                }
+            }
+            // 一键放入
+            onClick { event: ClickEvent ->
+                event.isCancelled = true
+                val playerItem = event.currentItem
+                val item = event.getItem('A')
+                val gem = event.getItem('B')
+                val luckGem = event.getItem('C')
+                // 装备
+                if (item == null) {
+                    if (XiangQian.hasInlayKey(playerItem)) {
+                        event.inventory.setItem(getFirstSlot('A'), playerItem)
+                        playerItem?.amount = 0
+                        return@onClick
+                    }
+                }
+                // 宝石
+                if (gem == null) {
+                    if (XiangQian.hasGem(playerItem)) {
+                        event.inventory.setItem(getFirstSlot('B'), playerItem)
+                        playerItem?.amount = 0
+                        return@onClick
+                    }
+                }
+                // 幸运石
+                if (luckGem == null) {
+                    if (XiangQian.hasLuckyGem(playerItem)) {
+                        event.inventory.setItem(getFirstSlot('C'), playerItem)
+                        playerItem?.amount = 0
+                        return@onClick
+                    }
+                }
+            }
+            // 装备取出
+            onClick('A') { event: ClickEvent ->
+                event.isCancelled = true
+                val item = event.getItem('A')
+                if (item !=null) {
+                    player.inventory.addItem(item)
+                    item.amount = 0
+                }
+            }
+            // 宝石取出
+            onClick('B') { event: ClickEvent ->
+                event.isCancelled = true
+                val item = event.getItem('B')
+                if (item !=null) {
+                    player.inventory.addItem(item)
+                    item.amount = 0
+                }
+            }
+            // 幸运石取出
+            onClick('C') { event: ClickEvent ->
+                event.isCancelled = true
+                val item = event.getItem('C')
+                if (item !=null) {
+                    player.inventory.addItem(item)
+                    item.amount = 0
                 }
             }
         }

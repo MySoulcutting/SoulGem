@@ -48,4 +48,22 @@ object XiangQian {
         }
         return randomChance
     }
+    // 装备上是否有孔
+    fun hasInlayKey(item: ItemStack?): Boolean {
+        val inlayLore = GemTypeConf.gemType.values
+        inlayLore.forEach {
+            if (item?.hasLore(it.checkLore) == true) {
+                return true
+            }
+        }
+        return false
+    }
+    // 是否为宝石
+    fun hasGem(item: ItemStack?): Boolean {
+        return item?.getItemTag()?.getDeep("soulgem.id")?.asString() != null
+    }
+    // 是否为幸运石
+    fun hasLuckyGem(item: ItemStack?): Boolean {
+        return item?.getItemTag()?.getDeep("soulgem.luckyid")?.asString() != null
+    }
 }
