@@ -113,7 +113,7 @@ object ChaiXieUI {
                 val slot = event.rawSlot
                 val item = event.getItem('X')
                 val gemItem = event.inventory.getItem(slot)
-                player.sendInfo("ChaiXie-Success",event.inventory.getItem(slot).itemMeta?.displayName?: "未知")
+                player.sendInfo("ChaiXie-Success",event.inventory.getItem(slot)?.itemMeta?.displayName?: "未知")
                 // 获取宝石信息
                 val gemID = gemItem?.getItemTag()?.getDeep("soulgem.id")?.asString()
                 val gemType = gemItem?.getItemTag()?.getDeep("soulgem.type")?.asString()

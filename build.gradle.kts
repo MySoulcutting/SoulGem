@@ -3,16 +3,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    id("io.izzel.taboolib") version "2.0.11"
-    id("org.jetbrains.kotlin.jvm") version "1.8.22"
+    id("io.izzel.taboolib") version "2.0.22"
+    id("org.jetbrains.kotlin.jvm") version "1.9.22"
 }
 
 taboolib {
     env {
         // 安装模块
-        install(UNIVERSAL, BUKKIT_ALL, UI, LANG, NMS, NMS_UTIL)
+        install(Bukkit, BukkitNMS, BukkitUtil, BukkitNMSUtil, I18n, BukkitUI, CommandHelper)
     }
-    version { taboolib = "6.1.2-beta10" }
+    version { taboolib = "6.2.2" }
 }
 
 repositories {
