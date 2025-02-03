@@ -3,6 +3,7 @@ package com.whitesoul.soulgem.file.gem
 import com.whitesoul.soulgem.data.GemTypeData
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.module.chat.colored
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.ConfigFile
 
@@ -16,7 +17,7 @@ object GemTypeConf {
         gemType.clear()
         val sec = config.getConfigurationSection("GemType")?.getKeys(false)
         sec?.forEach { key ->
-            val lore = config.getString("GemType.$key.lore")
+            val lore = config.getString("GemType.$key.lore")?.colored()
             gemType[key] = GemTypeData(key, lore)
         }
     }

@@ -10,9 +10,9 @@ import taboolib.common.platform.event.SubscribeEvent
 import taboolib.module.chat.colored
 
 object AttributeUpdateListener {
-    val attributeList = ArrayList<String>()
     @SubscribeEvent
     fun onAttributeUpdate(e: AttrUpdateAttributeEvent.Before) {
+        val attributeList = ArrayList<String>()
         val player = e.attributeData.getPlayer()
         val attributeData = e.attributeData
         val itemList = ArrayList<ItemStack?>()
@@ -30,16 +30,17 @@ object AttributeUpdateListener {
         itemList.apply { add(itemMainHand); add(itemOffHand); add(armorHead); add(armorChest); add(armorLegs); add(armorFeet) }
         // 更新宝石属性
         attributeList.clear()
-        updateGemItemList(itemList)
+        updateGemItemList(itemList, attributeList)
         AttributeAPI.addSourceAttribute(attributeData,"SoulGem", attributeList)
     }
-    // 更新宝石属性
-    fun updateGemItemList(itemList: ArrayList<ItemStack?>) {
+    // 更新宝石列表
+    fun updateGemItemList(itemList: ArrayList<ItemStack?>, attributeList: ArrayList<String>) {
         itemList.forEach { itemStack ->
-            updateGemAttribute(itemStack)
+            updateGemAttribute(itemStack, attributeList)
         }
     }
-    fun updateGemAttribute(itemStack: ItemStack?) {
+    // 更新宝石属性
+    fun updateGemAttribute(itemStack: ItemStack?, attributeList: ArrayList<String>) {
         val itemLore = itemStack?.itemMeta?.lore
         itemLore?.forEach { key ->
             val gemID = GemsFile.inlayGemsLore[key]

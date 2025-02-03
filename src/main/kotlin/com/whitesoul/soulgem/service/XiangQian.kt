@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack
 import taboolib.common.util.random
 import taboolib.module.chat.colored
 import taboolib.module.nms.getItemTag
+import taboolib.module.nms.getName
 import taboolib.platform.util.hasLore
 import taboolib.platform.util.sendInfo
 
@@ -23,6 +24,8 @@ object XiangQian {
         val gemLore = gemType?.checkLore
         // 替换Lore
         if (item?.hasLore(gemLore) == true && gem !=null) {
+            // 获取宝石名称
+            val gemName = gemItem?.getName()
             // 减少宝石数量
             gemItem?.amount = gemItem?.amount?.minus(1)!!
             luckyGemItem?.amount = luckyGemItem?.amount?.minus(1)!!
@@ -30,7 +33,7 @@ object XiangQian {
             // 概率计算
             if (chance < gem.chance) {
                 item.replaceFirstLore(gemLore, gem.inlayLore.colored())
-                player.sendInfo("XiangQian-Success", gemItem.itemMeta?.displayName?: "未知", item.itemMeta?.displayName?: "未知")
+                player.sendInfo("XiangQian-Success", gemName?: "未知", item.itemMeta?.displayName?: "未知")
             } else {
                 player.sendInfo("XiangQian-Fail")
             }
@@ -43,8 +46,8 @@ object XiangQian {
         val randomChance = random(0.0,100.0)
         if (luckyGemItem !=null && luckyGemItem.getItemTag().getDeep("soulgem.luckyid")?.asString() != null) {
             val luckyGem = LuckyGemsFile.gems[luckyGemItem.getItemTag().getDeep("soulgem.luckyid")?.asString()]
-            val addChance = luckyGem?.addChance
-            return randomChance.minus(addChance!!)
+            val addChance = luckyGem?.addChance ?: 0.0
+            return randomChance.minus(addChance)
         }
         return randomChance
     }

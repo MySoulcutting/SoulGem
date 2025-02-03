@@ -11,6 +11,7 @@ import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
 import taboolib.platform.util.buildItem
 import taboolib.platform.util.giveItem
+import taboolib.platform.util.isAir
 
 object XiangQianUI {
     // 打开UI
@@ -80,31 +81,32 @@ object XiangQianUI {
             // 一键放入
             onClick { event: ClickEvent ->
                 event.isCancelled = true
-                val playerItem = event.currentItem
+                val playerItem: ItemStack? = event.currentItem
                 val item = event.getItem('A')
                 val gem = event.getItem('B')
                 val luckGem = event.getItem('C')
+                if (playerItem.isAir()) return@onClick
                 // 装备
-                if (item == null) {
+                if (item.isAir()) {
                     if (XiangQian.hasInlayKey(playerItem)) {
                         event.inventory.setItem(getFirstSlot('A'), playerItem)
-                        playerItem?.amount = 0
+                        playerItem.amount = 0
                         return@onClick
                     }
                 }
                 // 宝石
-                if (gem == null) {
+                if (gem.isAir()) {
                     if (XiangQian.hasGem(playerItem)) {
                         event.inventory.setItem(getFirstSlot('B'), playerItem)
-                        playerItem?.amount = 0
+                        playerItem.amount = 0
                         return@onClick
                     }
                 }
                 // 幸运石
-                if (luckGem == null) {
+                if (luckGem.isAir()) {
                     if (XiangQian.hasLuckyGem(playerItem)) {
                         event.inventory.setItem(getFirstSlot('C'), playerItem)
-                        playerItem?.amount = 0
+                        playerItem.amount = 0
                         return@onClick
                     }
                 }
@@ -113,7 +115,7 @@ object XiangQianUI {
             onClick('A') { event: ClickEvent ->
                 event.isCancelled = true
                 val item = event.getItem('A')
-                if (item !=null) {
+                if (item != null) {
                     player.inventory.addItem(item)
                     item.amount = 0
                 }

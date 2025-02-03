@@ -17,9 +17,7 @@ import taboolib.module.nms.getItemTag
 import taboolib.module.ui.ClickEvent
 import taboolib.module.ui.openMenu
 import taboolib.module.ui.type.Chest
-import taboolib.platform.util.buildItem
-import taboolib.platform.util.modifyLore
-import taboolib.platform.util.sendInfo
+import taboolib.platform.util.*
 
 object ChaiXieUI {
     // 打开UI
@@ -84,6 +82,7 @@ object ChaiXieUI {
                             event.inventory.setItem(it, gemItems.removeFirstOrNull())
                         }
                         event.getItems('@').forEach { invGem ->
+                            if (invGem.isAir()) return@forEach
                             invGem.modifyLore {
                                 add("")
                                 add("")
@@ -112,11 +111,12 @@ object ChaiXieUI {
                 if (event.slot == 'X') return@onClick
                 val slot = event.rawSlot
                 val item = event.getItem('X')
-                val gemItem = event.inventory.getItem(slot)
+                // 判空 返回
+                val gemItem = event.inventory.getItem(slot) ?: return@onClick
                 player.sendInfo("ChaiXie-Success",event.inventory.getItem(slot)?.itemMeta?.displayName?: "未知")
                 // 获取宝石信息
-                val gemID = gemItem?.getItemTag()?.getDeep("soulgem.id")?.asString()
-                val gemType = gemItem?.getItemTag()?.getDeep("soulgem.type")?.asString()
+                val gemID = gemItem.getItemTag().getDeep("soulgem.id")?.asString()
+                val gemType = gemItem.getItemTag().getDeep("soulgem.type")?.asString()
                 val gemData = GemsFile.gems[gemID]
                 val inlayLore = gemData?.inlayLore?.colored()
                 val typeLore = GemTypeConf.gemType[gemType]?.checkLore?.colored()
